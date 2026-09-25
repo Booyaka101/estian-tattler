@@ -65,3 +65,21 @@ The Studio side is `@sanity/workflow-studio-plugin`. It gives a Workflows tool w
 ## The front page
 
 Static Next.js on GitHub Pages. It only fetches published stories with a `printedAt`, so a draft can't leak onto it. Every claim is underlined, and hovering or focusing it shows the records it cites, with the day and hour. The press fires a `repository_dispatch` and the Action rebuilds the site, so printing a story in the Studio puts it on the front page a couple of minutes later.
+
+## The Night Desk
+
+The Studio's Workflows tool shows one run at a time, and the paper's real question is who it hasn't written about. So `nightdesk/` is an App SDK app in the Dashboard: `useWorkflowInstances` for a board of every run by stage, `useWorkflowSession` for the open run, `useQuery` for the story and the coverage counts, and `useCreateDocument` plus `engine.startInstance` for Pitch. The buttons in the run panel aren't hardcoded. They're the actions the session's evaluation says are available, and Send back stays disabled until its note is filled in, because the action declares a required `note` param. The engine records each commit's execution context, and runs driven from the app show up in the instance history as `sdk` / `browser`.
+
+What went wrong:
+
+- Pitch created the story, awaited `startInstance`, then opened the run. Nothing appeared to happen. The run was on the board within seconds, but the promise settled much later, since every engine commit from the browser does a tick that takes about three seconds. Pitch now mints the instance id with `instanceDocId`, opens the panel on it straight away, and only uses the promise to report an error.
+- The first pitched story got the id `story-human99323-<timestamp>`. I aborted that run and ids are slugged from the name now, so it's `story-flubber-flubber`.
+- Once Flubber was pitched, the coverage list flagged his grave visitors "on the desk" too, though they'd been in print for editions. Grave-visit records name the visitor as well as the dead, so a pitch for one colonist puts records about the others into its leads. The flag now only shows for someone the paper hasn't cited at all.
+- After I spiked a story, everyone in its leads stayed "on the desk" with no Pitch button. "On the desk" meant any unprinted story, and a spiked story is never printed. It now means a story with a run still in flight.
+- The Dashboard puts the app in an iframe on a different host from the page, so the CDP screenshots attach to the iframe target by host.
+
+Two stories went through the whole loop from the app.
+
+Flubber Flubber had ten records, all grave visits, and the paper had never printed him. Pitch, reporter, fact-check passed with 8 claims. Reading it, three sentences said more than their receipts: "more than anyone else on record", "the last one in the files" and "the colony's own records say little more". Each named the right people and cited real visits, so the checker couldn't object, but they were claims about records the story didn't cite. I sent it back from the Night Desk with that note. The rewrite cited all ten visits, so "more than any other visitor on record" is now something a reader can count, and it passed with 7 claims. I sent it to press from the app and it's edition 5. Flubber's pawn is `Male` in the save, so "his grave" is right.
+
+Marcellina Triarius, a visitor with 29 records, went the other way. The draft passed with 7 claims, and every one checked out against its records. I spiked it anyway. All 29 records are chats, so two days of small talk was the whole story. It called her "she", but visitors come through the ingest with no gender, so that was a guess from the name. And it ended with "the last word so far went to Aquila Summanus" on a record where Marcellina is the one talking. That's the third thing the checker can't see after absence and comparison: a claim that cites the right record and reads it backwards.

@@ -35,13 +35,24 @@ reporting -> fact-check -> editor -> printing -> printed
 - **editor** waits for a person: Send to press, Send back (with a note the reporter gets on the next draft), or Spike it. This happens in the Studio's Workflows tool or the story's Workflows tab.
 - **printing** runs the `print` effect: numbers the edition, publishes the draft, and fires a `repository_dispatch` that rebuilds the front page.
 
-Stories get pitched from the Studio with the "Pitch a story" action on any record.
+Stories get pitched from the Studio with the "Pitch a story" action on any record, or from the Night Desk.
+
+## The Night Desk
+
+`nightdesk/` is an App SDK app that runs in the Sanity Dashboard. It's the editor's view of the whole paper rather than one story:
+
+- A board with every run in its current stage, live from `useWorkflowInstances`.
+- A run panel driven by `useWorkflowSession`. It shows the story with every claim marked with how many records back it, and the editor's buttons come from the session's evaluation, so Send back asks for its note because the action declares that param.
+- A coverage meter: how many of each colonist's records the printed stories cite. Anyone at zero gets a Pitch button, which creates the story with their records as leads and starts a `story-desk` run for it.
+
+Dashboard apps are only visible to members of the organization, so `docs/nightdesk.png` is what it looks like.
 
 ## What's here
 
 - `ingest/parse_save.py` reads a `.rws` save (plain or gzipped) and writes `data/tattler.ndjson`: the colony, its pawns and every record. Tales carry no text of their own in the save, so it renders them from the tale def and the pawns involved.
 - `studio/` is the schema (colony, pawn, record, story), the Receipts view that lays each sentence next to its records, the Pitch action, and the workflow plugin.
 - `newsroom/` is the workflow definition and the effect handlers, plus `desk-runner.ts`, which claims and runs pending effects.
+- `nightdesk/` is the App SDK dashboard app described above.
 - `frontpage/` is a static Next.js site. Every underlined claim shows its records on hover or focus.
 
 ## Running it
@@ -59,6 +70,12 @@ cd newsroom && npm install
 npm test
 npx sanity-workflows start story-desk --field 'subject={"id":"dataset:lcvgtfvq:production:story-berry-rot","type":"story"}'
 npm run desk
+```
+
+The Night Desk runs in your own organization's Dashboard. Set `organizationId` in `nightdesk/sanity.cli.ts` and drop the `deployment.appId`, then:
+
+```sh
+cd nightdesk && npm install && npm run dev
 ```
 
 To rebuild the dataset from your own save:

@@ -1,0 +1,269 @@
+:root {
+  --ink: #141414;
+  --paper: #f4efe4;
+  --red: #c8102e;
+  --rule: #1414142e;
+  --serif: Georgia, 'Times New Roman', serif;
+  --sans: 'Helvetica Neue', Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--serif);
+}
+
+a {
+  color: var(--red);
+}
+
+button {
+  font: 700 0.8rem var(--sans);
+  cursor: pointer;
+}
+
+.desk {
+  padding: 1rem 1.25rem 3rem;
+}
+
+.masthead {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  border-bottom: 4px double var(--ink);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.nameplate {
+  background: var(--red);
+  color: #fff;
+  font: italic 900 1.8rem / 1.1 var(--serif);
+  padding: 0.1rem 0.6rem 0.2rem;
+}
+
+.strap,
+.kicker {
+  font: 600 0.75rem var(--sans);
+  color: #555;
+}
+
+.quiet {
+  font-style: italic;
+  color: #666;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(150px, 1fr));
+  gap: 0.75rem;
+  border-bottom: 1px solid var(--rule);
+  padding-bottom: 1rem;
+}
+
+.column h2 {
+  font: 700 0.72rem var(--sans);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-bottom: 2px solid var(--ink);
+  padding-bottom: 0.3rem;
+  margin: 0 0 0.5rem;
+}
+
+.stage-editor h2 {
+  color: var(--red);
+  border-color: var(--red);
+}
+
+.count {
+  color: #888;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  width: 100%;
+  text-align: left;
+  background: #fff;
+  border: 1px solid var(--rule);
+  padding: 0.5rem 0.6rem;
+  margin-bottom: 0.5rem;
+}
+
+.card strong {
+  font: 700 0.95rem / 1.2 var(--serif);
+}
+
+.card:hover,
+.card.open {
+  border-color: var(--ink);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+.note {
+  font: italic 400 0.8rem var(--serif);
+  color: var(--red);
+}
+
+.lower {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.run-head {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.section {
+  background: var(--ink);
+  color: var(--paper);
+  font: 700 0.7rem var(--sans);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0.15rem 0.5rem;
+}
+
+.close {
+  margin-left: auto;
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+}
+
+.proof h3 {
+  font: 900 1.6rem / 1.1 var(--serif);
+  margin: 0.6rem 0 0.2rem;
+}
+
+.proof .dek {
+  font-style: italic;
+  margin-top: 0;
+}
+
+.proof p {
+  line-height: 1.55;
+}
+
+.claim {
+  text-decoration: underline 1px #c8102e70;
+  text-underline-offset: 3px;
+}
+
+.claim sup {
+  font: 700 0.6rem var(--sans);
+  color: var(--red);
+  margin-left: 1px;
+}
+
+.aside {
+  color: #666;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.75rem;
+  border-top: 1px solid var(--ink);
+  padding-top: 0.75rem;
+}
+
+.actions.busy {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.action {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.action textarea {
+  width: 22rem;
+  min-height: 3.2rem;
+  font: 0.85rem var(--serif);
+}
+
+.action button {
+  border: 2px solid var(--ink);
+  background: #fff;
+  padding: 0.45rem 0.8rem;
+}
+
+.action-approve button {
+  background: var(--red);
+  border-color: var(--red);
+  color: #fff;
+}
+
+.action button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.failure {
+  color: var(--red);
+  font: 600 0.85rem var(--sans);
+}
+
+.moves {
+  font: 0.8rem var(--sans);
+  padding-left: 1.2rem;
+}
+
+.coverage h2 {
+  font: 800 1.2rem var(--serif);
+  margin: 0;
+}
+
+.coverage ul {
+  list-style: none;
+  padding: 0;
+}
+
+.coverage li {
+  display: grid;
+  grid-template-columns: 1fr 6rem 3.2rem 5.5rem;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0;
+  border-bottom: 1px solid var(--rule);
+  font-size: 0.9rem;
+}
+
+.coverage li.colonist .who {
+  font-weight: 700;
+}
+
+.meter {
+  height: 0.5rem;
+  background: #1414141a;
+}
+
+.meter span {
+  display: block;
+  height: 100%;
+  background: var(--red);
+}
+
+.tally {
+  font: 0.75rem var(--sans);
+  text-align: right;
+}
+
+.coverage button {
+  border: 1px solid var(--ink);
+  background: #fff;
+  padding: 0.2rem 0.5rem;
+}
