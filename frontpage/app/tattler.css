@@ -161,8 +161,8 @@ a {
 
 .claim {
   position: relative;
-  text-decoration: underline 2px var(--red);
-  text-underline-offset: 3px;
+  text-decoration: underline 1px #c8102e70;
+  text-underline-offset: 4px;
   cursor: help;
   outline: none;
 }
@@ -170,6 +170,7 @@ a {
 .claim:hover,
 .claim:focus {
   background: #c8102e14;
+  text-decoration: underline 2px var(--red);
 }
 
 .receipts {
