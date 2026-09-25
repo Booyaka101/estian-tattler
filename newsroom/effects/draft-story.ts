@@ -49,6 +49,7 @@ The fact-checker is a program, not a person, and it checks every sentence:
 
 Write like a small-town tabloid that loves these people: sharp, warm, a little nosy. Dates are colony days ("on Day 142"). Short paragraphs, 150 to 350 words in all.
 Don't invent motives, feelings or events. If the records don't say why something happened, wonder about it in an aside.
+Only use he or she for someone who_is gives a gender for. Otherwise use their name.
 Use check_draft before you file, and fix everything it reports.`
 
 function renderRecord(r: DeskRecord): string {
@@ -116,7 +117,7 @@ export const draftStory: EffectHandler = async (params, ctx) => {
             .map((p) => {
               const theirs = morgue.records.filter((r) => r.pawns?.some((ref) => ref._ref === p._id))
               const days = theirs.map((r) => r.colonyDay ?? 0)
-              return `${p.name} (${[p.gender, p.age && `age ${p.age}`, p.relationNote].filter(Boolean).join(', ')}). ` +
+              return `${p.name} (${[p.gender ?? 'gender not on file', p.age && `age ${p.age}`, p.relationNote].filter(Boolean).join(', ')}). ` +
                 `Also known as ${p.aliases?.join(', ')}. In ${theirs.length} records, Day ${Math.min(...days)} to Day ${Math.max(...days)}.`
             })
             .join('\n'),
