@@ -1,0 +1,52 @@
+{
+  "name": "estian-tattler",
+  "private": true,
+  "version": "1.0.0",
+  "main": "package.json",
+  "license": "UNLICENSED",
+  "scripts": {
+    "build": "sanity build",
+    "deploy": "sanity deploy",
+    "deploy-graphql": "sanity graphql deploy",
+    "dev": "sanity dev",
+    "start": "sanity start"
+  },
+  "keywords": [
+    "sanity"
+  ],
+  "dependencies": {
+    "@sanity/icons": "^5.2.2",
+    "@sanity/sdk": "^3.5.0",
+    "@sanity/ui": "^4.2.4",
+    "@sanity/vision": "^6.16.0",
+    "@sanity/workflow-components": "^0.35.0",
+    "@sanity/workflow-diagram": "^0.35.0",
+    "@sanity/workflow-engine": "^0.35.0",
+    "@sanity/workflow-react": "^0.35.0",
+    "@sanity/workflow-sdk": "^0.35.0",
+    "@sanity/workflow-studio": "^0.35.0",
+    "@sanity/workflow-studio-plugin": "^0.35.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "sanity": "^6.16.0",
+    "styled-components": "^6.5.3"
+  },
+  "devDependencies": {
+    "@sanity/eslint-config-studio": "^7",
+    "@types/react": "^19.2.14",
+    "eslint": "^10.8.1",
+    "prettier": "^3.5",
+    "typescript": "^5.8"
+  },
+  "prettier": {
+    "bracketSpacing": false,
+    "printWidth": 100,
+    "semi": false,
+    "singleQuote": true
+  },
+  "overrides": {
+    "@sanity/sdk": {
+      "@sanity/mutate": "0.18.2"
+    }
+  }
+}
