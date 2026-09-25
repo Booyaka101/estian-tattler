@@ -28,13 +28,15 @@ interface Morgue {
   total: number
   printed: string[]
   unprinted: {_id: string; leads: string[] | null}[]
+  stories: string[]
 }
 
 const QUERY = `{
   "pawns": *[_type == "pawn"]{_id, name, everColonist, "records": *[_type == "record" && references(^._id)]{_id, kind, tick}},
   "total": count(*[_type == "record"]),
   "printed": array::unique(*[_type == "story" && defined(printedAt)].body[].markDefs[_type == "claim"].records[]._ref),
-  "unprinted": *[_type == "story" && !defined(printedAt)]{_id, "leads": leads[]._ref}
+  "unprinted": *[_type == "story" && !defined(printedAt)]{_id, "leads": leads[]._ref},
+  "stories": *[_type == "story"]._id
 }`
 
 // Talks are mostly small talk; tales and letters make better leads.
@@ -63,7 +65,10 @@ export function Coverage({engine, onPitched}: {engine: Engine; onPitched: (insta
     setFailure(undefined)
     try {
       const leads = leadsFor(pawn.records.filter((r) => !printed.has(r._id)))
-      const storyId = `story-${pawn.name.toLowerCase().replace(/[^a-z]+/g, '-').replace(/^-|-$/g, '')}`
+      const slug = `story-${pawn.name.toLowerCase().replace(/[^a-z]+/g, '-').replace(/^-|-$/g, '')}`
+      const taken = new Set(data.stories.map(bareId))
+      let storyId = slug
+      for (let n = 2; taken.has(storyId); n++) storyId = `${slug}-${n}`
       await createStory(
         {
           headline: pawn.name,
