@@ -5,3 +5,5 @@ dist/
 .sanity/
 .next/
 out/
+next-env.d.ts
+*.tsbuildinfo
